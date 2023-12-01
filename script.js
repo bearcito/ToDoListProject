@@ -71,20 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 localStorage.setItem('tareas', JSON.stringify(tareas));
             });
 
-            const checkLista = document.createElement('input');
-            checkLista.type = 'checkbox';
-            checkLista.checked = tarea.lista;
-            checkLista.classList.add('check-lista');
-            checkLista.addEventListener('change', () => {
-                tarea.lista = checkLista.checked;
-                localStorage.setItem('tareas', JSON.stringify(tareas));
-                renderizarTareas(); // Renderizar de nuevo para reflejar los cambios visuales
-            });
-
             listItem.appendChild(checkTarea);
             listItem.appendChild(detallesTarea);
             listItem.appendChild(prioridadSelector);
-            listItem.appendChild(checkLista);
             listaTareas.appendChild(listItem);
 
             // Estilo adicional para las tareas de lista
