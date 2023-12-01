@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" class="container mt-5">
+        <h1 class="mb-4">ToDo List</h1>
+        <ul id="taskList" class="mb-3"></ul>
+        <div class="progress-grid" id="progressGrid"></div>
+        <form id="taskForm" class="mb-4">
+            <div class="form-group">
+                <label for="title">Tarea:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="alarm">Hora de la alarma:</label>
+                <input type="time" id="alarm" name="alarm" class="form-control">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="repeat" name="repeat" class="form-check-input">
+                <label class="form-check-label" for="repeat">Repetir diariamente</label>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Agregar tarea</button>
+            <button type="button" class="btn btn-danger mt-3 ml-2" id="clearCompleted">Eliminar completadas</button>
+        </form>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
