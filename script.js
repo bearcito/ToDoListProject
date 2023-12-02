@@ -1,35 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+    
     const listaTareas = document.getElementById('listaTareas');
     const formularioTarea = document.getElementById('formularioTarea');
     const limpiarCompletadasBoton = document.getElementById('limpiarCompletadas');
-
-    function actualizarBarraProgreso() {
-        const fechaActual = new Date();
-        const tareas = JSON.parse(localStorage.getItem('tareas')) || [];
-        const totalDias = tareas.length;
-        const barraProgreso = document.getElementById('barraProgreso');
-        barraProgreso.innerHTML = '';
-
-        for (let i = 0; i < totalDias; i++) {
-            const celda = document.createElement('div');
-            celda.classList.add('celda-progreso');
-
-            if (tareas[i].completada) {
-                celda.style.backgroundColor = '#4CAF50'; // Verde (si está completada)
-            } else {
-                const fechaTarea = new Date(tareas[i].fecha);
-                const diferenciaEnMinutos = (fechaActual - fechaTarea) / (1000 * 60);
-
-                if (diferenciaEnMinutos <= 0) {
-                    celda.style.backgroundColor = '#FFC107'; // Amarillo (si está a tiempo)
-                } else {
-                    celda.style.backgroundColor = '#FF5733'; // Rojo (si no está a tiempo)
-                }
-            }
-
-            barraProgreso.appendChild(celda);
-        }
-    }
 
     function renderizarTareas() {
         listaTareas.innerHTML = '';
@@ -48,24 +21,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 tarea.completada = !tarea.completada;
                 localStorage.setItem('tareas', JSON.stringify(tareas));
                 renderizarTareas();
-                actualizarBarraProgreso();
             });
 
             const detallesTarea = document.createElement('span');
-            detallesTarea.textContent = `${tarea.titulo} - ${tarea.fecha} ${tarea.alarma ? `(${tarea.alarma})` : ''}`;
+            detallesTarea.textContent = `${tarea.titulo} ${tarea.alarma ? `(${tarea.alarma})` : ''}`;
             detallesTarea.addEventListener('click', () => {
-                alert(`Detalles de la tarea:\n${tarea.titulo}\nFecha: ${tarea.fecha}\nAlarma: ${tarea.alarma}`);
+                alert(`Detalles de la tarea:\n${tarea.titulo}\nAlarma: ${tarea.alarma}`);
             });
 
             const prioridadSelector = document.createElement('select');
-            prioridadSelector.classList.add('prioridad-selector');
-            ['Baja', 'Media', 'Alta'].forEach(opcion => {
+            prioridadSelector.classList.add('prioridad-selector', 'vaporwave-select');
+            ['baja', 'media', 'alta'].forEach(opcion => {
+                prioridadSelector.className = 'prioridad'
                 const option = document.createElement('option');
                 option.value = opcion.toLowerCase();
                 option.text = opcion;
                 prioridadSelector.add(option);
             });
             prioridadSelector.value = tarea.prioridad || 'media';
+            prioridadSelector.style.borderRadius = '30px';
             prioridadSelector.addEventListener('change', () => {
                 tarea.prioridad = prioridadSelector.value;
                 localStorage.setItem('tareas', JSON.stringify(tareas));
@@ -76,13 +50,10 @@ document.addEventListener('DOMContentLoaded', function () {
             listItem.appendChild(prioridadSelector);
             listaTareas.appendChild(listItem);
 
-            // Estilo adicional para las tareas de lista
             if (tarea.lista) {
                 listItem.classList.add('tarea-lista');
             }
         });
-
-        actualizarBarraProgreso();
     }
 
     function limpiarTareasCompletadas() {
@@ -90,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const tareasActualizadas = tareas.filter(tarea => !tarea.completada);
         localStorage.setItem('tareas', JSON.stringify(tareasActualizadas));
         renderizarTareas();
-        actualizarBarraProgreso();
     }
 
     function establecerAlarma(horaAlarma, tarea) {
@@ -125,10 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const prioridad = evento.target.elements.prioridad.value;
 
         if (titulo) {
-            const fechaActual = new Date();
             const nuevaTarea = {
                 titulo,
-                fecha: fechaActual.toISOString().split('T')[0],
                 alarma: alarma || null,
                 repetirDiariamente,
                 completada: false,

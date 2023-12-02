@@ -10,7 +10,6 @@
     <div id="app" class="container mt-5">
         <h1 class="mb-4">Lista de Tareas</h1>
         <ul id="listaTareas" class="mb-3"></ul>
-        <div class="barra-progreso" id="barraProgreso"></div>
         <form id="formularioTarea" class="mb-4">
             <div class="grupo-formulario">
                 <label for="titulo">Tarea:</label>
@@ -20,17 +19,17 @@
                 <label for="alarma">Hora de la alarma:</label>
                 <input type="time" id="alarma" name="alarma" class="form-control">
             </div>
-            <div class="grupo-formulario">
-                <label for="prioridad">Prioridad:</label>
-                <select id="prioridad" name="prioridad" class="form-control">
-                    <option value="baja">Baja</option>
-                    <option value="media" selected>Media</option>
-                    <option value="alta">Alta</option>
-                </select>
-            </div>
             <div class="form-check">
                 <input type="checkbox" id="repetirDiariamente" name="repetirDiariamente" class="form-check-input">
                 <label class="form-check-label" for="repetirDiariamente">Repetir diariamente</label>
+            </div>
+            <div class="grupo-formulario">
+                <label for="prioridad">Prioridad:</label>
+                <select id="prioridad" name="prioridad" class="form-control">
+                    <option value="baja">baja</option>
+                    <option value="media" selected>media</option>
+                    <option value="alta">alta</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primario mt-3">Agregar tarea</button>
             <button type="button" class="btn btn-peligro mt-3 ml-2" id="limpiarCompletadas">Eliminar completadas</button>
